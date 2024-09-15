@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jumpscare</title>
+    <title>Jumpscare with Countdown</title>
     <style>
         /* Set up black background and center button */
         body, html {
@@ -14,11 +14,19 @@
             justify-content: center;
             align-items: center;
             background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
         }
 
         /* Centered container */
         .container {
             text-align: center;
+        }
+
+        /* Countdown text */
+        .countdown-text {
+            margin-bottom: 20px;
+            font-size: 24px;
         }
 
         /* Style for the button */
@@ -27,12 +35,19 @@
             font-size: 24px;
             border: none;
             border-radius: 50px;
-            background-color: white;
-            cursor: pointer;
+            background-color: gray;
+            color: white;
+            cursor: not-allowed;
             transition: background-color 0.3s ease;
         }
 
-        button:hover {
+        button.active {
+            background-color: white;
+            color: black;
+            cursor: pointer;
+        }
+
+        button:hover.active {
             background-color: lightgray;
         }
 
@@ -57,7 +72,10 @@
 <body>
 
     <div class="container">
-        <button id="enter-btn">Enter</button>
+        <!-- Countdown message -->
+        <div class="countdown-text">Please wait for <span id="countdown">5</span> seconds before entering...</div>
+        <!-- Button initially disabled -->
+        <button id="enter-btn" disabled>Enter</button>
     </div>
 
     <!-- Jumpscare container with YouTube embed -->
@@ -70,9 +88,45 @@
     </div>
 
     <script>
-        document.getElementById("enter-btn").addEventListener("click", function() {
-            const jumpscare = document.getElementById("jumpscare");
-            const jumpscareVideo = document.getElementById("jumpscare-video");
+        // Set countdown to 5 seconds
+        let countdownTime = 5;
+        const countdownEl = document.getElementById('countdown');
+        const enterButton = document.getElementById('enter-btn');
 
-            // YouTube jumpscare video link (working link)
-            const youtubeLink = "https://www.youtube.com/embe
+        // Preload the jumpscare video
+        const jumpscareVideo = document.getElementById('jumpscare-video');
+        const youtubeLink = "https://www.youtube.com/embed/ZSQyzAelL8U?autoplay=1&controls=0";
+        jumpscareVideo.src = youtubeLink;
+
+        // Countdown function
+        const countdownInterval = setInterval(() => {
+            countdownTime--;
+            countdownEl.textContent = countdownTime;
+
+            // After countdown reaches 0, enable the button
+            if (countdownTime <= 0) {
+                clearInterval(countdownInterval);
+                enterButton.disabled = false;
+                enterButton.classList.add('active');
+                enterButton.style.cursor = 'pointer';
+                enterButton.textContent = 'Enter';
+            }
+        }, 1000);
+
+        // Click event to show the jumpscare
+        enterButton.addEventListener('click', function() {
+            if (!enterButton.disabled) {
+                const jumpscare = document.getElementById("jumpscare");
+                jumpscare.style.display = "block";
+
+                // Hide jumpscare after 5 seconds
+                setTimeout(function() {
+                    jumpscare.style.display = "none";
+                    jumpscareVideo.src = ""; // Stop video when jumpscare is hidden
+                }, 5000); // Adjust time as necessary
+            }
+        });
+    </script>
+
+</body>
+</html>
