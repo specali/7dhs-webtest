@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jumpscare with Countdown</title>
+    <title>specali's site</title>
     <style>
         /* Set up black background and center button */
         body, html {
@@ -51,8 +51,8 @@
             background-color: lightgray;
         }
 
-        /* Hidden YouTube iframe for the jumpscare */
-        #jumpscare {
+        /* Hidden YouTube iframe for the rickroll */
+        #rickroll {
             display: none;
             position: fixed;
             top: 0;
@@ -78,9 +78,9 @@
         <button id="enter-btn" disabled>Enter</button>
     </div>
 
-    <!-- Jumpscare container with YouTube embed -->
-    <div id="jumpscare">
-        <iframe id="jumpscare-video" 
+    <!-- Rickroll container with YouTube embed -->
+    <div id="rickroll">
+        <iframe id="rickroll-video" 
             src="" 
             frameborder="0" 
             allow="autoplay; encrypted-media" 
@@ -93,10 +93,10 @@
         const countdownEl = document.getElementById('countdown');
         const enterButton = document.getElementById('enter-btn');
 
-        // Preload the jumpscare video
-        const jumpscareVideo = document.getElementById('jumpscare-video');
-        const youtubeLink = "https://www.youtube.com/embed/EEpWEpf4Yeg?autoplay=1&controls=0";
-        jumpscareVideo.src = youtubeLink;
+        // Preload the rickroll video
+        const rickrollVideo = document.getElementById('rickroll-video');
+        const youtubeLink = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=0";
+        rickrollVideo.src = youtubeLink;
 
         // Countdown function
         const countdownInterval = setInterval(() => {
@@ -113,16 +113,16 @@
             }
         }, 1000);
 
-        // Click event to show the jumpscare
+        // Click event to show the rickroll
         enterButton.addEventListener('click', function() {
             if (!enterButton.disabled) {
-                const jumpscare = document.getElementById("jumpscare");
-                jumpscare.style.display = "block";
+                const rickroll = document.getElementById("rickroll");
+                rickroll.style.display = "block";
 
-                // Hide jumpscare after 5 seconds
+                // Hide the rickroll after 5 seconds (optional)
                 setTimeout(function() {
-                    jumpscare.style.display = "none";
-                    jumpscareVideo.src = ""; // Stop video when jumpscare is hidden
+                    rickroll.style.display = "none";
+                    rickrollVideo.src = ""; // Stop video when hidden
                 }, 5000); // Adjust time as necessary
             }
         });
