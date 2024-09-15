@@ -64,24 +64,34 @@
             sendNotification(`**User is present at ${currentTime} using ${browserName}**`);
         }
 
-        // Notify the visit on page load
+        // Start sending presence notifications
         notifyPresence();
-
-        // Send a notification every 5 seconds
         const intervalId = setInterval(notifyPresence, 5000);
 
-        // Function to handle tab closing
-        function handleTabClose() {
-            // Use sendBeacon for reliable message sending
-            const beaconUrl = "https://discord.com/api/webhooks/1284743737016057856/DN-8fCOSSJtP3QrwqRsh_FEjGCVox3F9uxtSccf0wM2rIOOtIZsiFQz8fuSjUpOgeH7P";
-            const data = JSON.stringify({ content: '--------------' });
+        // Track the last message sent
+        let lastMessageSentTime = Date.now();
 
-            navigator.sendBeacon(beaconUrl, data);
-            clearInterval(intervalId); // Clear the interval to stop sending notifications
+        // Function to handle the case when the periodic message stops
+        function handleInactivity() {
+            const currentTime = Date.now();
+            const inactivityDuration = 10000; // 10 seconds
+
+            if (currentTime - lastMessageSentTime >= inactivityDuration) {
+                sendNotification('--------------');
+                clearInterval(intervalId); // Clear the interval to stop sending notifications
+            }
         }
 
-        // Listen for the unload event to detect when the user is leaving the page
-        window.addEventListener('beforeunload', handleTabClose);
+        // Function to update the last message sent time
+        function updateLastMessageTime() {
+            lastMessageSentTime = Date.now();
+        }
+
+        // Update last message time whenever a notification is sent
+        setInterval(updateLastMessageTime, 5000);
+
+        // Check for inactivity every second
+        setInterval(handleInactivity, 1000);
     </script>
 
 </body>
