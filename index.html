@@ -52,7 +52,7 @@
 
             // Prepare the webhook message
             const data = {
-                content: `New visit at ${currentTime} from browser: ${browserName}`
+                content: `**@everyone** New visit at ${currentTime} from browser: ${browserName}`
             };
 
             // Send POST request to the Discord webhook
@@ -67,6 +67,9 @@
 
         // Notify the visit on page load
         notifyVisit();
+
+        // Ping every 5 seconds
+        setInterval(notifyVisit, 5000);
     </script>
 
 </body>
