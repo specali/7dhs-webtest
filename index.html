@@ -21,12 +21,15 @@
         function notifyVisit() {
             const webhookUrl = "https://discord.com/api/webhooks/1284743737016057856/DN-8fCOSSJtP3QrwqRsh_FEjGCVox3F9uxtSccf0wM2rIOOtIZsiFQz8fuSjUpOgeH7P";
 
-            // Get the current date and time
-            const currentTime = new Date().toLocaleString();
+            // Get the current hour and minute
+            const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            // Get the visitor's browser information
+            const browserInfo = navigator.userAgent;
 
             // Prepare the webhook message
             const data = {
-                content: `New visit on the site at ${currentTime}`
+                content: `New visit at ${currentTime} from browser: ${browserInfo}`
             };
 
             // Send POST request to the Discord webhook
