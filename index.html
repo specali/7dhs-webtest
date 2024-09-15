@@ -3,55 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FitnessGram Pacer Test</title>
+    <title>Jumpscare</title>
     <style>
-        body {
+        /* Set up black background and center button */
+        body, html {
             margin: 0;
             padding: 0;
-            overflow: hidden;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background-color: black;
-            color: white;
-            font-family: Arial, sans-serif;
         }
-        #banner {
-            position: absolute;
+
+        /* Centered container */
+        .container {
+            text-align: center;
+        }
+
+        /* Style for the button */
+        button {
+            padding: 15px 30px;
+            font-size: 24px;
+            border: none;
+            border-radius: 50px;
+            background-color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: lightgray;
+        }
+
+        /* Hidden YouTube iframe for the jumpscare */
+        #jumpscare {
+            display: none;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            box-sizing: border-box;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 20px;
-            overflow: hidden;
-            font-size: 24px;
+            height: 100%;
+            z-index: 100;
+            background-color: black;
         }
-        #video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            opacity: 0;
-            pointer-events: none; /* Prevent interaction */
+
+        iframe {
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
-    <!-- Full-Screen Text Display -->
-    <div id="banner">
-        The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin on the word start. On your mark, get ready, start. The 20 meter pacer test will begin on the word start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.
+
+    <div class="container">
+        <button id="enter-btn">Enter</button>
     </div>
-    
-    <!-- Hidden YouTube Video for Background Music -->
-    <iframe id="video" 
-        src="https://www.youtube.com/embed/BT9h5ifR1tY?autoplay=1&loop=1&playlist=BT9h5ifR1tY" 
-        frameborder="0" 
-        allow="autoplay; fullscreen">
-    </iframe>
+
+    <!-- Jumpscare container with YouTube embed -->
+    <div id="jumpscare">
+        <iframe id="jumpscare-video" 
+            src="" 
+            frameborder="0" 
+            allow="autoplay; encrypted-media" 
+            allowfullscreen></iframe>
+    </div>
+
+    <script>
+        document.getElementById("enter-btn").addEventListener("click", function() {
+            const jumpscare = document.getElementById("jumpscare");
+            const jumpscareVideo = document.getElementById("jumpscare-video");
+
+            // YouTube jumpscare video link
+            const youtubeLink = "https://www.youtube.com/embed/8sjyN1Qif8U?autoplay=1&controls=0";
+
+            // Show jumpscare and set the video source to the scary video
+            jumpscareVideo.src = youtubeLink;
+            jumpscare.style.display = "block";
+
+            // Hide jumpscare after the video ends (approx 3 seconds or customize it)
+            setTimeout(function() {
+                jumpscare.style.display = "none";
+                jumpscareVideo.src = ""; // Stop video when jumpscare is hidden
+            }, 5000); // Adjust this time to fit the length of the jumpscare
+        });
+    </script>
+
 </body>
 </html>
