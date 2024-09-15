@@ -35,8 +35,14 @@
                 transform: translateX(-100%);
             }
         }
-        audio {
-            display: none;
+        #video {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Prevent interaction */
+            z-index: -1; /* Send to back */
         }
     </style>
 </head>
@@ -44,9 +50,6 @@
     <div id="banner">
         The FitnessGram™ Pacer Test is a multistage aerobic capacity test that progressively gets more difficult as it continues. The 20 meter pacer test will begin on the word start. On your mark, get ready, start. The 20 meter pacer test will begin on the word start. The running speed starts slowly, but gets faster each minute after you hear this signal. [beep] A single lap should be completed each time you hear this sound. [ding] Remember to run in a straight line, and run as long as possible. The second time you fail to complete a lap before the sound, your test is over. The test will begin on the word start. On your mark, get ready, start.
     </div>
-    <audio autoplay loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-    </audio>
+    <iframe id="video" src="https://www.youtube.com/embed/BT9h5ifR1tY?autoplay=1&loop=1&playlist=BT9h5ifR1tY" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
 </body>
 </html>
