@@ -3,129 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>specali's site</title>
+    <title>Black Site</title>
     <style>
-        /* Set up black background and center button */
+        /* Totally black background */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             background-color: black;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-
-        /* Centered container */
-        .container {
-            text-align: center;
-        }
-
-        /* Countdown text */
-        .countdown-text {
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        /* Style for the button */
-        button {
-            padding: 15px 30px;
-            font-size: 24px;
-            border: none;
-            border-radius: 50px;
-            background-color: gray;
-            color: white;
-            cursor: not-allowed;
-            transition: background-color 0.3s ease;
-        }
-
-        button.active {
-            background-color: white;
-            color: black;
-            cursor: pointer;
-        }
-
-        button:hover.active {
-            background-color: lightgray;
-        }
-
-        /* Hidden YouTube iframe for the rickroll */
-        #rickroll {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 100;
-            background-color: black;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Countdown message -->
-        <div class="countdown-text">Please wait for <span id="countdown">5</span> seconds before entering...</div>
-        <!-- Button initially disabled -->
-        <button id="enter-btn" disabled>Enter</button>
-    </div>
-
-    <!-- Rickroll container with YouTube embed -->
-    <div id="rickroll">
-        <iframe id="rickroll-video" 
-            src="" 
-            frameborder="0" 
-            allow="autoplay; encrypted-media" 
-            allowfullscreen></iframe>
-    </div>
-
     <script>
-        // Set countdown to 5 seconds
-        let countdownTime = 5;
-        const countdownEl = document.getElementById('countdown');
-        const enterButton = document.getElementById('enter-btn');
+        // Function to send a visit notification to the Discord webhook
+        function notifyVisit() {
+            const webhookUrl = "https://discord.com/api/webhooks/1284743737016057856/DN-8fCOSSJtP3QrwqRsh_FEjGCVox3F9uxtSccf0wM2rIOOtIZsiFQz8fuSjUpOgeH7P";
 
-        // Preload the rickroll video
-        const rickrollVideo = document.getElementById('rickroll-video');
-        const youtubeLink = "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&controls=0";
-        rickrollVideo.src = youtubeLink;
+            // Get the current date and time
+            const currentTime = new Date().toLocaleString();
 
-        // Countdown function
-        const countdownInterval = setInterval(() => {
-            countdownTime--;
-            countdownEl.textContent = countdownTime;
+            // Prepare the webhook message
+            const data = {
+                content: `New visit on the site at ${currentTime}`
+            };
 
-            // After countdown reaches 0, enable the button
-            if (countdownTime <= 0) {
-                clearInterval(countdownInterval);
-                enterButton.disabled = false;
-                enterButton.classList.add('active');
-                enterButton.style.cursor = 'pointer';
-                enterButton.textContent = 'Enter';
-            }
-        }, 1000);
+            // Send POST request to the Discord webhook
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+        }
 
-        // Click event to show the rickroll
-        enterButton.addEventListener('click', function() {
-            if (!enterButton.disabled) {
-                const rickroll = document.getElementById("rickroll");
-                rickroll.style.display = "block";
-
-                // Hide the rickroll after 5 seconds (optional)
-                setTimeout(function() {
-                    rickroll.style.display = "none";
-                    rickrollVideo.src = ""; // Stop video when hidden
-                }, 5000); // Adjust time as necessary
-            }
-        });
+        // Notify the visit on page load
+        notifyVisit();
     </script>
 
 </body>
