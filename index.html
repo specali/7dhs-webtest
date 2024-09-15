@@ -18,22 +18,17 @@
             top: 0;
             left: 0;
             width: 100%;
-            white-space: nowrap;
-            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
             box-sizing: border-box;
-            animation: scroll-left 20s linear infinite;
-            font-size: 24px;
-            padding: 10px;
             background: rgba(0, 0, 0, 0.8);
             color: white;
-        }
-        @keyframes scroll-left {
-            from {
-                transform: translateX(100%);
-            }
-            to {
-                transform: translateX(-100%);
-            }
+            padding: 20px;
+            overflow: hidden;
+            font-size: 24px;
         }
         #video {
             position: absolute;
