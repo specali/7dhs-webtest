@@ -40,22 +40,14 @@
             }
         }
 
-        // Function to send a visit notification to the Discord webhook
-        function notifyVisit() {
+        // Function to send a notification to the Discord webhook
+        function sendNotification(content) {
             const webhookUrl = "https://discord.com/api/webhooks/1284743737016057856/DN-8fCOSSJtP3QrwqRsh_FEjGCVox3F9uxtSccf0wM2rIOOtIZsiFQz8fuSjUpOgeH7P";
-
-            // Get the current hour and minute
-            const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-            // Detect the browser
-            const browserName = detectBrowser();
-
-            // Prepare the webhook message
+            
             const data = {
-                content: `**@everyone** New visit at ${currentTime} from browser: ${browserName}`
+                content: content
             };
 
-            // Send POST request to the Discord webhook
             fetch(webhookUrl, {
                 method: "POST",
                 headers: {
@@ -65,11 +57,27 @@
             });
         }
 
-        // Notify the visit on page load
-        notifyVisit();
+        // Function to notify the user's presence
+        function notifyPresence() {
+            const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const browserName = detectBrowser();
+            sendNotification(`**User is present at ${currentTime} using ${browserName}**`);
+        }
 
-        // Ping every 5 seconds
-        setInterval(notifyVisit, 5000);
+        // Notify the visit on page load
+        notifyPresence();
+
+        // Send a notification every 5 seconds
+        const intervalId = setInterval(notifyPresence, 5000);
+
+        // Function to handle tab closing
+        function handleTabClose() {
+            sendNotification('--------------');
+            clearInterval(intervalId); // Clear the interval to stop sending notifications
+        }
+
+        // Listen for the unload event to detect when the user is leaving the page
+        window.addEventListener('beforeunload', handleTabClose);
     </script>
 
 </body>
