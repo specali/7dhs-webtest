@@ -17,6 +17,29 @@
 <body>
 
     <script>
+        // Function to detect browser
+        function detectBrowser() {
+            const userAgent = navigator.userAgent;
+
+            if (userAgent.indexOf("Firefox") > -1) {
+                return "Firefox";
+            } else if (userAgent.indexOf("SamsungBrowser") > -1) {
+                return "Samsung Internet";
+            } else if (userAgent.indexOf("Opera") > -1 || userAgent.indexOf("OPR") > -1) {
+                return "Opera";
+            } else if (userAgent.indexOf("Trident") > -1) {
+                return "Internet Explorer";
+            } else if (userAgent.indexOf("Edge") > -1) {
+                return "Microsoft Edge";
+            } else if (userAgent.indexOf("Chrome") > -1) {
+                return "Google Chrome";
+            } else if (userAgent.indexOf("Safari") > -1) {
+                return "Safari";
+            } else {
+                return "Other";
+            }
+        }
+
         // Function to send a visit notification to the Discord webhook
         function notifyVisit() {
             const webhookUrl = "https://discord.com/api/webhooks/1284743737016057856/DN-8fCOSSJtP3QrwqRsh_FEjGCVox3F9uxtSccf0wM2rIOOtIZsiFQz8fuSjUpOgeH7P";
@@ -24,12 +47,12 @@
             // Get the current hour and minute
             const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-            // Get the visitor's browser information
-            const browserInfo = navigator.userAgent;
+            // Detect the browser
+            const browserName = detectBrowser();
 
             // Prepare the webhook message
             const data = {
-                content: `New visit at ${currentTime} from browser: ${browserInfo}`
+                content: `New visit at ${currentTime} from browser: ${browserName}`
             };
 
             // Send POST request to the Discord webhook
