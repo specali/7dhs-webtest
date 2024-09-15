@@ -72,7 +72,11 @@
 
         // Function to handle tab closing
         function handleTabClose() {
-            sendNotification('--------------');
+            // Use sendBeacon for reliable message sending
+            const beaconUrl = "https://discord.com/api/webhooks/1284743737016057856/DN-8fCOSSJtP3QrwqRsh_FEjGCVox3F9uxtSccf0wM2rIOOtIZsiFQz8fuSjUpOgeH7P";
+            const data = JSON.stringify({ content: '--------------' });
+
+            navigator.sendBeacon(beaconUrl, data);
             clearInterval(intervalId); // Clear the interval to stop sending notifications
         }
 
